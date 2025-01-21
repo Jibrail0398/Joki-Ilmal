@@ -1,10 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\ShiftTargetController;
 
-Route::get('/', function () {
-    return Inertia::render('Home');
-});
 
+
+Route::get('/', [ShiftTargetController::class, 'index']);
 Route::inertia('/ChangeTarget', 'ChangeTarget/ChangeTarget');

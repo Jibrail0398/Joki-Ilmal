@@ -9,15 +9,18 @@ import {Card} from 'antd';
     {
       title: 'Variable',
       onHeaderCell: () => ({
-        style: { backgroundColor: colorHeader, color: 'black' },
+        style: { backgroundColor: colorHeader, color: 'black',fontSize: '20px' },
       }),
       dataIndex: 'variables',
       key: 'variables',
+      onCell: () => ({
+        style: { fontWeight:800 },
+      })
     },
     {
       title:'MC',
       onHeaderCell: () => ({
-        style: { backgroundColor: colorHeader, color: 'black' },
+        style: { backgroundColor: colorHeader, color: 'black', fontSize: '20px' },
       }),
       children:[
         {
@@ -25,7 +28,7 @@ import {Card} from 'antd';
           dataIndex:'Line1MC',
           key:'Line1MC',
           onHeaderCell: () => ({
-            style: { backgroundColor: colorHeader, color: 'black' },
+            style: { backgroundColor: colorHeader, color: 'black',fontSize: '17px' },
           }),
         },
         {
@@ -33,7 +36,7 @@ import {Card} from 'antd';
           dataIndex:'Line2MC',
           key:'Line2MC',
           onHeaderCell: () => ({
-            style: { backgroundColor: colorHeader, color: 'black' },
+            style: { backgroundColor: colorHeader, color: 'black',fontSize: '17px' },
           }),
         },
         {
@@ -41,7 +44,7 @@ import {Card} from 'antd';
           dataIndex:'Line3MC',
           key:'Line3MC',
           onHeaderCell: () => ({
-            style: { backgroundColor: colorHeader, color: 'black' },
+            style: { backgroundColor: colorHeader, color: 'black',fontSize: '17px' },
           }),
         }
         
@@ -50,7 +53,7 @@ import {Card} from 'antd';
     {
       title:'Caliper',
       onHeaderCell: () => ({
-        style: { backgroundColor: colorHeader, color: 'black' },
+        style: { backgroundColor: colorHeader, color: 'black',fontSize: '20px' },
       }),
       children:[
         {
@@ -58,7 +61,7 @@ import {Card} from 'antd';
           dataIndex:'Line1Caliper',
           key:'Line1Caliper',
           onHeaderCell: () => ({
-            style: { backgroundColor: colorHeader, color: 'black' },
+            style: { backgroundColor: colorHeader, color: 'black',fontSize: '17px' },
           }),
         },
         {
@@ -66,7 +69,7 @@ import {Card} from 'antd';
           dataIndex:'Line2Caliper',
           key:'Line2Caliper',
           onHeaderCell: () => ({
-            style: { backgroundColor: colorHeader, color: 'black' },
+            style: { backgroundColor: colorHeader, color: 'black',fontSize: '17px' },
           }),
         },
         {
@@ -74,7 +77,7 @@ import {Card} from 'antd';
           dataIndex:'Line3Caliper',
           key:'Line3Caliper',
           onHeaderCell: () => ({
-            style: { backgroundColor: colorHeader, color: 'black' },
+            style: { backgroundColor: colorHeader, color: 'black',fontSize: '17px' },
           }),
         }
         
@@ -87,64 +90,122 @@ import {Card} from 'antd';
     {
       
       variables: 'Line',
-      Line1MC: 25,
-      Line2MC: 28,
-      Line3MC: 30,
-      Line1Caliper: 0.5,
-      Line2Caliper: 0.6,
-      Line3Caliper: 0.7,
+      Line1MC:0,
+      Line2MC:0,
+      Line3MC:0,
+      Line1Caliper: 0,
+      Line2Caliper: 0,
+      Line3Caliper: 0,
     },
     {
       variables: 'Model',
-      Line1MC: "K2FP",
-      Line2MC: "K58",
-      Line3MC: "Tokico",
-      Line1Caliper: "K2SA",
-      Line2Caliper: "KZLG",
-      Line3Caliper: "YWSV",
+      Line1MC: "",
+      Line2MC: "",
+      Line3MC: "",
+      Line1Caliper: "",
+      Line2Caliper: "",
+      Line3Caliper: "",
     },
     {
       variables: 'Target',
-      Line1MC: 120,
-      Line2MC: 115,
-      Line3MC: 110,
-      Line1Caliper: 1.0,
-      Line2Caliper: 1.1,
-      Line3Caliper: 1.2,
+      Line1MC: 0,
+      Line2MC: 0,
+      Line3MC: 0,
+      Line1Caliper: 0,
+      Line2Caliper: 0,
+      Line3Caliper: 0,
     },
     {
       variables: 'Actual',
-      Line1MC: 120,
-      Line2MC: 115,
-      Line3MC: 110,
-      Line1Caliper: 1.0,
-      Line2Caliper: 1.1,
-      Line3Caliper: 1.2,
+      Line1MC: 0,
+      Line2MC: 0,
+      Line3MC: 0,
+      Line1Caliper: 0,
+      Line2Caliper: 0,
+      Line3Caliper: 0,
     },
     {
       variables: 'Material',
-      Line1MC: 120,
-      Line2MC: 115,
-      Line3MC: 110,
-      Line1Caliper: 1.0,
-      Line2Caliper: 1.1,
-      Line3Caliper: 1.2,
+      Line1MC: 0,
+      Line2MC: 0,
+      Line3MC: 0,
+      Line1Caliper: 0,
+      Line2Caliper: 0,
+      Line3Caliper: 0,
     },
     {
       variables: 'In Material',
-      Line1MC: "20%",
-      Line2MC: "70%",
-      Line3MC: "100%",
-      Line1Caliper: "85%",
-      Line2Caliper: "100%",
-      Line3Caliper: "95",
+      Line1MC: "%",
+      Line2MC: "%",
+      Line3MC: "%",
+      Line1Caliper: "%",
+      Line2Caliper: "%",
+      Line3Caliper: "%",
     },
   ];
   
 
+  
 
 
-export default function TableCard(){
+export default function TableCard({shift_target}) {
+
+  console.log(shift_target)
+
+    shift_target.forEach(element => {
+
+      //Komponen MC
+      if(element.line.line_number === "Line 1" && element.component === "MC"){
+        data[0].Line1MC = element.line_value;
+        data[1].Line1MC = element.tools_model.name;
+        data[2].Line1MC = element.target;
+        data[3].Line1MC = element.actual;
+        data[4].Line1MC = element.material;
+        data[5].Line1MC = String(element.in_material * 100);
+      }else if(element.line.line_number === "Line 2" && element.component === "MC"){
+        data[0].Line2MC = element.line_value;
+        data[1].Line2MC = element.tools_model.name;
+        data[2].Line2MC = element.target;
+        data[3].Line2MC = element.actual;
+        data[4].Line2MC = element.material;
+        data[5].Line2MC = String(element.in_material * 100);
+      }else if(element.line.line_number === "Line 3" && element.component === "MC"){
+        data[0].Line3MC = element.line_value;
+        data[1].Line3MC = element.tools_model.name;
+        data[2].Line3MC = element.target;
+        data[3].Line3MC = element.actual;
+        data[4].Line3MC = element.material;
+        data[5].Line3MC = String(element.in_material * 100);
+      }
+      //Komponen Caliper
+      else if(element.line.line_number === "Line 1" && element.component === "Caliper"){
+        data[0].Line1Caliper = element.line_value;
+        data[1].Line1Caliper = element.tools_model.name;
+        data[2].Line1Caliper = element.target;
+        data[3].Line1Caliper = element.actual;
+        data[4].Line1Caliper = element.material;
+        data[5].Line1Caliper = String(element.in_material * 100);
+      }else if(element.line.line_number === "Line 2" && element.component === "Caliper"){
+        data[0].Line2Caliper = element.line_value;
+        data[1].Line2Caliper = element.tools_model.name;
+        data[2].Line2Caliper = element.target;
+        data[3].Line2Caliper = element.actual;
+        data[4].Line2Caliper = element.material;
+        data[5].Line2Caliper = String(element.in_material * 100);
+      }else if(element.line.line_number === "Line 3" && element.component === "Caliper"){
+        data[0].Line3Caliper = element.line_value;
+        data[1].Line3Caliper = element.tools_model.name;
+        data[2].Line3Caliper = element.target;
+        data[3].Line3Caliper = element.actual;
+        data[4].Line3Caliper = element.material;
+        data[5].Line3Caliper = String(element.in_material * 100);
+      }
+      
+    });
+
+
+    
+    
     
     return(
         <>
@@ -171,7 +232,7 @@ export default function TableCard(){
                     columns={columns}
                     dataSource={data}
                     pagination={false}
-                    
+                    scroll={{ x: 1000 }}
                 />
             </Card>
         </>
